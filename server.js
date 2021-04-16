@@ -11,17 +11,17 @@ dotenv.config({ path: './config/config.env' })
 // Connect to database
 connectDB()
 
+//Route files
+const catpictures = require('./routes/catpictures')
+
 const app = express()
 
 // Body parser
 
 app.use(express.json())
 
-app.get('/', (req, res) => {
-  res.send({
-    text: 'Hello world',
-  })
-})
+// Mont Routers
+app.use('/api/v1/catpictures', catpictures)
 
 const PORT = process.env.PORT || 5000
 
