@@ -17,6 +17,19 @@ const titles = [
   'Neat Pet',
 ]
 
+const catPicturesIds = [
+  '607c393a604e20e71b52b82a',
+  '607c39eb604e20e71b52b82b',
+  '607c39f6604e20e71b52b82c',
+  '607c39ff604e20e71b52b82d',
+  '607c3a14604e20e71b52b82e',
+  '607c3a1e604e20e71b52b82f',
+  '607c3a37604e20e71b52b830',
+  '607c3a58604e20e71b52b832',
+  '607c3a80604e20e71b52b833',
+  '607c3a96604e20e71b52b834',
+]
+
 // Get path to _data directory
 const dataDirectory = path.join(__dirname, '..', '_data')
 
@@ -35,6 +48,7 @@ const catStringsArray = catFiles.map((file, index) => {
     encoding: 'base64',
   })
   return {
+    __id: catPicturesIds[index],
     title: titles[index],
     originalBase64: catFileString,
   }

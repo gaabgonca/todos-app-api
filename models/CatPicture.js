@@ -6,9 +6,9 @@ const CatPictureSchema = new mongoose.Schema({
     trim: true,
     maxlength: [50, 'Title cannot be more than 50 characters'],
   },
-  photo: {
+  originalBase64: {
     type: String,
-    default: 'no-photo.jpg',
+    required: [true, 'Please add a base 64 encoded image'],
   },
   numberOfCats: {
     type: Number,

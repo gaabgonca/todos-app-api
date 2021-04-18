@@ -1,6 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const colors = require('colors')
+const morgan = require('morgan')
 
 const connectDB = require('./config/db')
 
@@ -18,7 +19,16 @@ const app = express()
 
 // Body parser
 
-app.use(express.json())
+app.use(
+  express.json({
+    limit: '10mb',
+  })
+)
+
+// Dev logging midleware
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
 
 // Mont Routers
 app.use('/api/v1/catpictures', catpictures)

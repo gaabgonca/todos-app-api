@@ -22,6 +22,7 @@ module.exports.getCatPictures = asyncHandler(
 module.exports.createCatPicture = asyncHandler(
   async (req, res, next) => {
     const catPicture = await CatPicture.create(req.body)
+
     res.status(201).json({
       success: true,
       data: catPicture,
