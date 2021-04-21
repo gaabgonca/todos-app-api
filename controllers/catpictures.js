@@ -19,6 +19,15 @@ module.exports.getCatPicture = asyncHandler(
   async (req, res, next) => {
     const catPicture = await CatPicture.findById(req.params.id)
 
+    if (!catPicture) {
+      return next(
+        new ErrorResponse(
+          `CatPicture not found with id ${req.params.id}`,
+          404
+        )
+      )
+    }
+
     res.status(200).json({
       success: true,
       data: catPicture,
@@ -45,7 +54,17 @@ module.exports.createCatPicture = asyncHandler(
 // @access private
 module.exports.updateCatPicture = asyncHandler(
   async (req, res, next) => {
-    console.log(req.body)
+    let catPicture = await CatPicture.findById(req.params.id)
+
+    if (!catPicture) {
+      return next(
+        new ErrorResponse(
+          `CatPicture not found with id ${req.params.id}`,
+          404
+        )
+      )
+    }
+
     catPicture = await CatPicture.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -67,8 +86,18 @@ module.exports.updateCatPicture = asyncHandler(
 // @access private
 module.exports.deleteCatPicture = asyncHandler(
   async (req, res, next) => {
-    console.log(req.body)
-    await CatPicture.findByIdAndDelete(req.params.id)
+    const catPicture = await CatPicture.findById(req.params.id)
+
+    if (!catPicture) {
+      return next(
+        new ErrorResponse(
+          `CatPicture not found with id ${req.params.id}`,
+          404
+        )
+      )
+    }
+
+    await catPicture.remove()
 
     res.status(200).json({
       success: true,

@@ -48,7 +48,7 @@ const catStringsArray = catFiles.map((file, index) => {
     encoding: 'base64',
   })
   return {
-    __id: catPicturesIds[index],
+    _id: catPicturesIds[index],
     title: titles[index],
     originalBase64: catFileString,
   }
