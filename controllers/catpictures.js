@@ -8,10 +8,20 @@ const CatPicture = require('../models/CatPicture')
 // @access public
 module.exports.getCatPictures = asyncHandler(
   async (req, res, next) => {
-    const catPictures = await CatPicture.find()
-    res.status(201).json({
+    res.status(200).json(res.advancedResults)
+  }
+)
+
+// @desc To fetch catpicture by Id
+// @route GET /api/v1/catpictures/:id
+// @access public
+module.exports.getCatPicture = asyncHandler(
+  async (req, res, next) => {
+    const catPicture = await CatPicture.findById(req.params.id)
+
+    res.status(200).json({
       success: true,
-      data: catPictures,
+      data: catPicture,
     })
   }
 )
@@ -26,6 +36,43 @@ module.exports.createCatPicture = asyncHandler(
     res.status(201).json({
       success: true,
       data: catPicture,
+    })
+  }
+)
+
+// @desc To edit catpicture by Id
+// @route PUT /api/v1/catpictures/:id
+// @access private
+module.exports.updateCatPicture = asyncHandler(
+  async (req, res, next) => {
+    console.log(req.body)
+    catPicture = await CatPicture.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    )
+
+    res.status(200).json({
+      success: true,
+      data: catPicture,
+    })
+  }
+)
+
+// @desc To delete catpicture by Id
+// @route DELETE /api/v1/catpictures/:id
+// @access private
+module.exports.deleteCatPicture = asyncHandler(
+  async (req, res, next) => {
+    console.log(req.body)
+    await CatPicture.findByIdAndDelete(req.params.id)
+
+    res.status(200).json({
+      success: true,
+      data: {},
     })
   }
 )
