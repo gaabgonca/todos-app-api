@@ -10,6 +10,10 @@ const CatPictureSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a base 64 encoded image'],
   },
+  haarBase64: {
+    type: String,
+    default: '',
+  },
   numberOfCats: {
     type: Number,
   },
@@ -22,5 +26,10 @@ const CatPictureSchema = new mongoose.Schema({
 })
 
 CatPictureSchema.set('timestamps', true)
+
+CatPictureSchema.pre('save', async function (next) {
+  console.log(this.originalBase64)
+  next()
+})
 
 module.exports = mongoose.model('CatPicture', CatPictureSchema)
