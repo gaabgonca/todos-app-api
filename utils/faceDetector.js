@@ -3,6 +3,7 @@ const { toBase64, base64toJpg } = require('./base64')
 const os = require('os')
 const path = require('path')
 const fs = require('fs')
+const { encode } = require('querystring')
 
 const COLOR = [0, 255, 0]
 const thickness = 2
@@ -14,16 +15,16 @@ const haar_cascade_path = path.join(
   'haarcascade_frontalcatface.xml'
 )
 
-module.exports.detectFaces = async (originalBase64) => {
-  let tempFileName = Date.now().toString()
-  let tempFilePath = path.join(__dirname, '..', '_temp', tempFileName)
-
-  let outFileName = tempFileName + 'haar' + '.jpg'
+module.exports.detectFaces = (catPicture, next) => {
+  let outFileName = Date.now().toString() + 'haar' + '.jpg'
   let outFilePath = path.join(__dirname, '..', '_temp', outFileName)
+
   //Decode base64 string into jpg image
-  tempFilePath = await base64toJpg(originalBase64, tempFilePath)
+  const buffer = new Buffer.from(catPicture.originalBase64, 'base64')
+
+  //Use haar magic to detect faces
   let facesCount = 0
-  cv.readImage(tempFilePath, function (err, im) {
+  cv.readImage(buffer, function (err, im) {
     im.detectObject(haar_cascade_path, {}, function (err, faces) {
       console.log(faces)
       for (var i = 0; i < faces.length; i++) {
@@ -37,6 +38,10 @@ module.exports.detectFaces = async (originalBase64) => {
         )
       }
       im.save(outFilePath)
+      const outBase64 = im.toBuffer().toString('base64')
+      catPicture.haarBase64 = outBase64
+      catPicture.numberOfCats = facesCount
+      next()
     })
   })
 }
