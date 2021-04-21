@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { detectFaces } = require('../utils/faceDetector')
 
 const CatPictureSchema = new mongoose.Schema({
   title: {
@@ -28,7 +29,8 @@ const CatPictureSchema = new mongoose.Schema({
 CatPictureSchema.set('timestamps', true)
 
 CatPictureSchema.pre('save', async function (next) {
-  console.log(this.originalBase64)
+  await detectFaces(this.originalBase64)
+
   next()
 })
 

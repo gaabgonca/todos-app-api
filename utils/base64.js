@@ -12,8 +12,9 @@ module.exports.toBase64 = async (imgPath) => {
 }
 
 module.exports.base64toJpg = async (imgString, fname) => {
-  return await decode(imgString, {
+  await decode(imgString, {
     fname,
     ext: 'jpg',
   })
+  return fname + '.jpg'
 }
