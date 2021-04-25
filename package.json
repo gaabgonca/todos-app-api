@@ -1,7 +1,7 @@
 {
-  "name": "simple-cat-detector-api",
+  "name": "todos-app-api",
   "version": "1.0.0",
-  "description": "API for mobile app that tracks cat faces",
+  "description": "API for mobile app that records todos",
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node server",
@@ -19,7 +19,6 @@
     "express": "^4.17.1",
     "mongoose": "^5.12.4",
     "morgan": "^1.10.0",
-    "node-base64-image": "^2.0.3",
-    "opencv": "^7.0.0"
+    "node-base64-image": "^2.0.3"
   }
 }

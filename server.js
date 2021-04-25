@@ -14,7 +14,7 @@ dotenv.config({ path: './config/config.env' })
 connectDB()
 
 //Route files
-const catpictures = require('./routes/catpictures')
+const todos = require('./routes/todos')
 
 const app = express()
 
@@ -26,13 +26,13 @@ app.use(
   })
 )
 
-// Dev logging midleware
+// Dev logging midleware`
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
 
 // Mont Routers
-app.use('/api/v1/catpictures', catpictures)
+app.use('/api/v1/todos', todos)
 
 app.use(errorHandler)
 
