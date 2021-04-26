@@ -14,11 +14,11 @@ const TodoSchema = new mongoose.Schema({
     default: false,
   },
 
-  // user: {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'User',
-  //     required: true,
-  // }
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true,
+  },
 })
 
 TodoSchema.set('timestamps', true)

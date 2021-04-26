@@ -1,0 +1,37 @@
+[
+  {
+    "role": "user",
+    "_id": "60859d48d29202095664418d",
+    "name": "Kiah Kerbler",
+    "email": "kkerbler4@dion.ne.jp",
+    "password": "123456"
+  },
+  {
+    "role": "user",
+    "_id": "60859d48d29202095664418a",
+    "name": "Niles O'Hoolahan",
+    "email": "nohoolahan1@vistaprint.com",
+    "password": "123456"
+  },
+  {
+    "role": "user",
+    "_id": "60859d48d29202095664418c",
+    "name": "Kahaleel Heald",
+    "email": "kheald3@engadget.com",
+    "password": "123456"
+  },
+  {
+    "role": "user",
+    "_id": "60859d48d29202095664418b",
+    "name": "Ches Ziemke",
+    "email": "cziemke2@sohu.com",
+    "password": "123456"
+  },
+  {
+    "role": "user",
+    "_id": "60859d48d292020956644189",
+    "name": "Carolee Rennenbach",
+    "email": "crennenbach0@multiply.com",
+    "password": "123456"
+  }
+]

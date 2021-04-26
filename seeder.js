@@ -7,7 +7,8 @@ const dotenv = require('dotenv')
 dotenv.config({ path: './config/config.env' })
 
 //Load models
-const CatPicture = require('./models/CatPicture')
+const Todo = require('./models/Todo')
+const User = require('./models/User')
 
 //Connect to DB
 mongoose.connect(process.env.MONGO_URI, {
@@ -18,14 +19,19 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 
 //Read JSON Files
-const cats = JSON.parse(
-  fs.readFileSync(`${__dirname}/_data/cats.json`, 'utf-8')
+const todos = JSON.parse(
+  fs.readFileSync(`${__dirname}/_data/todos.json`, 'utf-8')
+)
+
+const users = JSON.parse(
+  fs.readFileSync(`${__dirname}/_data/users.json`, 'utf-8')
 )
 
 //Import into DB
 const importData = async () => {
   try {
-    await CatPicture.create(cats)
+    await Todo.create(todos)
+    await User.create(users)
     console.log('Data imported...'.green.inverse)
     process.exit()
   } catch (error) {
@@ -36,7 +42,8 @@ const importData = async () => {
 // Delete data
 const deleteData = async () => {
   try {
-    await CatPicture.deleteMany()
+    await Todo.deleteMany()
+    await User.deleteMany()
     console.log('Data destroyed...'.red.inverse)
     process.exit()
   } catch (err) {

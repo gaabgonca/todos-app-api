@@ -27,10 +27,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a password'],
     minlenght: 6,
-    select: false,
+    // select: false,
   },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
 })
 
 UserSchema.set('timestamps', true)
+
+module.exports = mongoose.model('User', UserSchema)
