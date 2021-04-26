@@ -3,6 +3,11 @@ const dotenv = require('dotenv')
 const colors = require('colors')
 const morgan = require('morgan')
 const errorHandler = require('./middleware/error')
+const helmet = require('helmet')
+const xss = require('xss-clean')
+const rateLimit = require('express-rate-limit')
+const hpp = require('hpp')
+const cors = require('cors')
 
 const connectDB = require('./config/db')
 
@@ -33,6 +38,29 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
 
+//Sanitize inputs
+app.use(mongoSanitize())
+
+//Prevent XSS attacks
+app.use(xss())
+
+//Rate limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, ///10 minutes
+  max: 100,
+})
+
+app.use(limiter)
+
+//Prevent http param pollution
+app.use(hpp())
+
+//Enable CORS
+app.use(cors())
+
+//Set security headers
+app.use(helmet())
+
 // Mont Routers
 app.use('/api/v1/todos', todos)
 app.use('/api/v1/users', users)
@@ -45,7 +73,7 @@ const PORT = process.env.PORT || 5000
 const server = app.listen(
   PORT,
   console.log(
-    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}...`
       .yellow.bold
   )
 )
