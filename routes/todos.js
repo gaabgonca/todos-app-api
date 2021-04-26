@@ -12,6 +12,10 @@ const advancedResults = require('../middleware/advancedResults')
 
 const router = express.Router()
 
+const { protect } = require('../middleware/auth')
+
+router.use(protect)
+
 router
   .route('/')
   .get(advancedResults(Todo, undefined), getTodos)

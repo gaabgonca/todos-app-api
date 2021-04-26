@@ -7,7 +7,18 @@ const Todo = require('../models/Todo')
 // @route GET /api/v1/todos/
 // @access private
 module.exports.getTodos = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults)
+  //Check if user is admin
+  if (req.user && req.user.role === 'admin') {
+    return res.status(200).json(res.advancedResults)
+  }
+
+  //If user is not admin edit query
+  if (req.user) {
+    ;(async (req, res) => {
+      await (req.query['user'] = req.user.id)
+      return res.status(200).json(res.advancedResults)
+    })(req, res)
+  }
 })
 
 // @desc To fetch todo by Id
@@ -35,6 +46,9 @@ module.exports.getTodo = asyncHandler(async (req, res, next) => {
 // @route POST /api/v1/todos/
 // @access private
 module.exports.createTodo = asyncHandler(async (req, res, next) => {
+  //Add user to Todo
+  req.body.user = req.user.id
+
   const todo = await Todo.create(req.body)
 
   res.status(201).json({
@@ -54,6 +68,19 @@ module.exports.updateTodo = asyncHandler(async (req, res, next) => {
       new ErrorResponse(
         `Todo not found with id ${req.params.id}`,
         404
+      )
+    )
+  }
+
+  //Make sure user is Todo owner
+  if (
+    todo.user.toString() !== req.user.id &&
+    req.user.role !== 'admin'
+  ) {
+    return next(
+      new ErrorResponse(
+        `User ${req.params.id} is not authorized to edit this todo `,
+        401
       )
     )
   }
@@ -80,6 +107,19 @@ module.exports.deleteTodo = asyncHandler(async (req, res, next) => {
       new ErrorResponse(
         `Todo not found with id ${req.params.id}`,
         404
+      )
+    )
+  }
+
+  //Make sure user is Todo owner
+  if (
+    todo.user.toString() !== req.user.id &&
+    req.user.role !== 'admin'
+  ) {
+    return next(
+      new ErrorResponse(
+        `User ${req.params.id} is not authorized to edit this todo `,
+        401
       )
     )
   }

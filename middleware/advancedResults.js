@@ -5,8 +5,15 @@ const advancedResults = (model, populate) => async (
 ) => {
   let query
 
+  //Check if user in query is not admin and edit query
+  if (req.user && req.user.role !== 'admin') {
+    console.log('request user role', req.user.role)
+    req.query.user = req.user.id
+  }
+
   //Copy request.query
   let reqQuery = { ...req.query }
+  console.log('request query on advanced results', reqQuery)
 
   // Fields to remove
   const removeFields = ['select', 'sort', 'page', 'limit']
