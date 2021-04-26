@@ -16,6 +16,7 @@ connectDB()
 //Route files
 const todos = require('./routes/todos')
 const users = require('./routes/users')
+const auth = require('./routes/auth')
 
 const app = express()
 
@@ -35,6 +36,7 @@ if (process.env.NODE_ENV === 'development') {
 // Mont Routers
 app.use('/api/v1/todos', todos)
 app.use('/api/v1/users', users)
+app.use('/api/v1/auth', auth)
 
 app.use(errorHandler)
 
